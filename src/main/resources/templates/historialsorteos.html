@@ -97,13 +97,14 @@
                                     <td th:text="${sorteo.titulo}"></td>
                                     <td th:text="${#temporals.format(sorteo.fechaHora, 'dd/MM/yyyy HH:mm')}"></td>
                                     <td th:text="${sorteo.cantidadGrupos}"></td>                                    <td class="text-center">
-                                        <button class="btn-ver me-2" 
-                                            th:data-id="${sorteo.id}"
-                                            th:data-titulo="${sorteo.titulo}"
-                                            th:data-fecha="${#temporals.format(sorteo.fechaHora, 'dd/MM/yyyy HH:mm')}"
-                                            th:data-grupos="${sorteo.cantidadGrupos}"
-                                            th:data-resultado="${sorteo.resultado}"
-                                            onclick="showSorteoDetails(this)">
+                                        <button type="button" class="btn-ver me-2" 
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#sorteoModal"
+                                            th:data-sorteo-id="${sorteo.id}"
+                                            th:data-sorteo-titulo="${sorteo.titulo}"
+                                            th:data-sorteo-fecha="${#temporals.format(sorteo.fechaHora, 'dd/MM/yyyy HH:mm')}"
+                                            th:data-sorteo-grupos="${sorteo.cantidadGrupos}"
+                                            th:data-sorteo-resultado="${sorteo.resultado}">
                                             <i class="far fa-eye"></i> Ver sorteo
                                         </button>
                                         <a th:href="@{'/grupos/exportar-pdf/' + ${sorteo.id}}" class="btn-pdf">
@@ -121,9 +122,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!-- Modal para ver detalles del sorteo -->
+        </div>        <!-- Modal para ver detalles del sorteo -->
         <div class="modal fade" id="sorteoModal" tabindex="-1" aria-labelledby="sorteoModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -133,22 +132,22 @@
                     </div>
                     <div class="modal-body">
                         <div class="mb-4">
-                            <div class="mb-3">
-                                <label class="fw-bold">Título:</label>
-                                <span id="modalTitulo"></span>
+                            <div class="mb-3 row">
+                                <label class="col-sm-3 fw-bold">Título:</label>
+                                <div class="col-sm-9" id="modalTitulo"></div>
                             </div>
-                            <div class="mb-3">
-                                <label class="fw-bold">Fecha y Hora:</label>
-                                <span id="modalFecha"></span>
+                            <div class="mb-3 row">
+                                <label class="col-sm-3 fw-bold">Fecha y Hora:</label>
+                                <div class="col-sm-9" id="modalFecha"></div>
                             </div>
-                            <div class="mb-3">
-                                <label class="fw-bold">Cantidad de Grupos:</label>
-                                <span id="modalGrupos"></span>
+                            <div class="mb-3 row">
+                                <label class="col-sm-3 fw-bold">Cantidad de Grupos:</label>
+                                <div class="col-sm-9" id="modalGrupos"></div>
                             </div>
                         </div>
-                        <div>
-                            <label class="fw-bold">Resultado del Sorteo:</label>
-                            <pre class="resultado mt-2" id="modalResultado"></pre>
+                        <div class="resultado-container">
+                            <label class="fw-bold mb-2">Resultado del Sorteo:</label>
+                            <pre class="resultado p-3 bg-light rounded" id="modalResultado" style="white-space: pre-wrap; max-height: 400px; overflow-y: auto;"></pre>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -203,27 +202,30 @@
         </div>
     </div>
 
-    <!-- Scripts específicos para esta página -->
-    <th:block layout:fragment="scripts">
-        <script>            function showSorteoDetails(element) {
-                // Obtener datos de los atributos data
-                const id = element.dataset.id;
-                const titulo = element.dataset.titulo;
-                const fecha = element.dataset.fecha;
-                const grupos = element.dataset.grupos;
-                const resultado = element.dataset.resultado;
+    <!-- Scripts específicos para esta página -->    <th:block layout:fragment="scripts">
+        <script th:inline="javascript">
+            document.addEventListener('DOMContentLoaded', function() {
+                // Escuchar el evento show.bs.modal
+                const sorteoModal = document.getElementById('sorteoModal')
+                sorteoModal.addEventListener('show.bs.modal', function (event) {
+                    // Botón que activó el modal
+                    const button = event.relatedTarget
+                    
+                    // Extraer información de los atributos data-*
+                    const id = button.getAttribute('data-sorteo-id')
+                    const titulo = button.getAttribute('data-sorteo-titulo')
+                    const fecha = button.getAttribute('data-sorteo-fecha')
+                    const grupos = button.getAttribute('data-sorteo-grupos')
+                    const resultado = button.getAttribute('data-sorteo-resultado')
 
-                // Actualizar contenido del modal
-                document.getElementById('modalTitulo').textContent = titulo;
-                document.getElementById('modalFecha').textContent = fecha;
-                document.getElementById('modalGrupos').textContent = grupos + ' grupos';
-                document.getElementById('modalResultado').textContent = resultado;
-                document.getElementById('modalPdfLink').href = `/grupos/exportar-pdf/${id}`;
-
-                // Mostrar modal
-                const modal = new bootstrap.Modal(document.getElementById('sorteoModal'));
-                modal.show();
-            }
+                    // Actualizar el contenido del modal
+                    sorteoModal.querySelector('#modalTitulo').textContent = titulo
+                    sorteoModal.querySelector('#modalFecha').textContent = fecha
+                    sorteoModal.querySelector('#modalGrupos').textContent = grupos + ' grupos'
+                    sorteoModal.querySelector('#modalResultado').textContent = resultado
+                    sorteoModal.querySelector('#modalPdfLink').href = `/grupos/exportar-pdf/${id}`
+                })
+            })
         </script>
     </th:block>
 </body>
