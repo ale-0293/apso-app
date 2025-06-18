@@ -274,6 +274,42 @@ public class GrupoController {
         return ResponseEntity.ok()
                 .headers(headers)
                 .body(pdf);
+    }    @GetMapping("/grupos/exportar-pdf/{id}")
+    public ResponseEntity<byte[]> exportarPDF(@PathVariable Long id) {
+        try {
+            // Obtener el sorteo de la base de datos
+            Optional<SorteoGrupal> sorteoOpt = sorteoGrupalRepository.findById(id);
+            if (!sorteoOpt.isPresent()) {
+                return ResponseEntity.notFound().build();
+            }
+            
+            SorteoGrupal sorteo = sorteoOpt.get();
+            
+            // Generar PDF
+            byte[] pdfContent = pdfService.generarPDFSorteo(sorteo);
+            
+            // Limpiar el título para usarlo como nombre de archivo
+            String nombreArchivo = sorteo.getTitulo()
+                .replaceAll("[^a-zA-Z0-9.-]", "_") // Reemplazar caracteres no permitidos con _
+                .replaceAll("_{2,}", "_") // Reemplazar múltiples _ consecutivos con uno solo
+                .toLowerCase() + ".pdf";
+            
+            // Configurar headers para la descarga
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            headers.setContentDisposition(
+                ContentDisposition.builder("attachment")
+                    .filename(nombreArchivo)
+                    .build());
+            
+            return ResponseEntity.ok()
+                .headers(headers)
+                .body(pdfContent);
+                
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     private void agregarDatosUsuario(Model model, OidcUser oidcUser) {
