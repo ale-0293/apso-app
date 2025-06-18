@@ -24,6 +24,9 @@
         <li class="nav-item">
           <a class="nav-link" th:href="@{/sorteogrupos}">Sorteo</a>
         </li>
+        <li class="nav-item" th:if="${userName != null}">
+          <a class="nav-link" th:href="@{/historialsorteos}">Historial</a>
+        </li>
 
         <!-- Mostrar opciones según autenticación -->
         <li class="nav-item" th:if="${userName != null}">
@@ -35,10 +38,6 @@
             <button type="submit" class="nav-link btn btn-link text-white" style="text-decoration: none;">Cerrar sesión</button>
           </form>
         </li>
-        <!--</li>
-        <li class="nav-item" th:if="${userName != null}">
-          <a class="nav-link" th:href="@{/logout}">Cerrar sesión</a>
-        </li>-->
         <!-- Mostrar botón para iniciar sesión si el usuario NO está autenticado -->
         <li class="nav-item" th:if="${userName == null}">
           <a class="nav-link" th:href="@{/login}">Iniciar sesión</a>

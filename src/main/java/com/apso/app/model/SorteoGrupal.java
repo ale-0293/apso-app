@@ -18,29 +18,27 @@ public class SorteoGrupal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "titulo", length = 50, nullable = false)
+    @Column(length = 100, nullable = false)
     private String titulo;
 
-    @Column(name = "fecha_sorteo", nullable = false)
+    @Column(name = "fecha_hora", nullable = false)
     private LocalDateTime fechaHora;
 
     @Column(name = "cantidad_grupos", nullable = false)
     private Integer cantidadGrupos;
 
-    @Column(name = "resultado", columnDefinition = "TEXT", nullable = false)
-    private String resultado; // Guarda los grupos formados como texto plano o JSON
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String resultado;
 
-    // Relación muchos a muchos con Estudiante
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-        name = "estudiante_sorteo",
+        name = "sorteo_estudiantes",
         joinColumns = @JoinColumn(name = "sorteo_id"),
         inverseJoinColumns = @JoinColumn(name = "estudiante_id")
     )
     private List<Estudiante> estudiantes;
 
-    // Relación con el usuario que creó el sorteo
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 }

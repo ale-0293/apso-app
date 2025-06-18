@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface SorteoGrupalRepository extends JpaRepository<SorteoGrupal, Long> {
-    List<SorteoGrupal> findByUsuario(Usuario usuario);
+    List<SorteoGrupal> findByUsuarioOrderByFechaHoraDesc(Usuario usuario);
 }

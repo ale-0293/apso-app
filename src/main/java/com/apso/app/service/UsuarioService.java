@@ -14,7 +14,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UsuarioService {
 
-    private final UsuarioRepository usuarioRepository = null;
+    private final UsuarioRepository usuarioRepository;
 
     /**
      * Retorna el Usuario correspondiente al OidcUser (Auth0).

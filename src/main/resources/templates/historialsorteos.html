@@ -1,19 +1,112 @@
-<h1>Historial de Sorteos</h1>
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Título</th>
-            <th>Fecha/Hora</th>
-            <th>N° Grupos</th>
-            <th>Resultado</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr th:each="sorteo : ${sorteos}">
-            <td th:text="${sorteo.titulo}"></td>
-            <td th:text="${#temporals.format(sorteo.fechaHora, 'yyyy-MM-dd HH:mm')}"></td>
-            <td th:text="${sorteo.numeroGrupos}"></td>
-            <td th:text="${sorteo.resultado}"></td>
-        </tr>
-    </tbody>
-</table>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Historial de Sorteos - APSO</title>
+    <style>
+        pre.resultado {
+            max-height: 200px;
+            overflow-y: auto;
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <div layout:fragment="content">
+        <!-- Mensajes de error o éxito -->
+        <div th:if="${error}" class="alert alert-danger" role="alert">
+            <span th:text="${error}"></span>
+        </div>
+
+        <div class="container mt-4">
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    <h3 class="mb-0">Historial de Sorteos</h3>
+                </div>
+                <div class="card-body">
+                    <div th:if="${sorteos != null and !sorteos.empty}">
+                        <table class="table table-bordered table-hover">
+                            <thead class="table-danger">
+                                <tr>
+                                    <th>Título</th>
+                                    <th>Fecha/Hora</th>
+                                    <th>N° Grupos</th>
+                                    <th>Resultado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="sorteo : ${sorteos}">
+                                    <td th:text="${sorteo.titulo}"></td>
+                                    <td th:text="${#temporals.format(sorteo.fechaHora, 'dd/MM/yyyy HH:mm')}"></td>
+                                    <td th:text="${sorteo.cantidadGrupos}"></td>
+                                    <td>
+                                        <pre class="resultado mb-0" th:text="${sorteo.resultado}"></pre>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{/historialsorteos/exportar/{id}(id=${sorteo.id})}" 
+                                           class="btn btn-sm btn-danger" 
+                                           title="Exportar a PDF">
+                                            <i class="bi bi-file-earmark-pdf"></i> PDF
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div th:if="${sorteos == null or sorteos.empty}" class="alert alert-info">
+                        No hay sorteos guardados en el historial.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenido para el modal de ayuda -->
+    <div layout:fragment="help-content">
+        <h4>Guía de Uso - Historial de Sorteos</h4>
+        <hr>
+        <div class="help-section">
+            <h5>¿Qué es el Historial de Sorteos?</h5>
+            <p>El Historial de Sorteos es una página que te permite ver todos los sorteos de grupos que has realizado y guardado anteriormente.</p>
+        </div>
+
+        <div class="help-section mt-3">
+            <h5>Elementos de la Tabla</h5>
+            <ul>
+                <li><strong>Título:</strong> Nombre que le diste al sorteo cuando lo guardaste.</li>
+                <li><strong>Fecha/Hora:</strong> Momento exacto en que se realizó el sorteo (hora local).</li>
+                <li><strong>N° Grupos:</strong> Cantidad de grupos en que se dividieron los estudiantes.</li>
+                <li><strong>Resultado:</strong> Muestra la distribución detallada de estudiantes en cada grupo.</li>
+                <li><strong>Acciones:</strong> Botones para realizar acciones como exportar a PDF.</li>
+            </ul>
+        </div>
+
+        <div class="help-section mt-3">
+            <h5>Características</h5>
+            <ul>
+                <li>Los sorteos se muestran ordenados del más reciente al más antiguo.</li>
+                <li>Cada sorteo muestra la lista completa de estudiantes asignados a cada grupo.</li>
+                <li>Puedes exportar cualquier sorteo a PDF para guardarlo o compartirlo.</li>
+                <li>Si no hay sorteos guardados, verás un mensaje indicándolo.</li>
+            </ul>
+        </div>
+
+        <div class="help-section mt-3">
+            <h5>¿Cómo usar esta página?</h5>
+            <ol>
+                <li>Los sorteos se guardan automáticamente cuando usas la opción "Guardar" en la página de Sorteo de Grupos.</li>
+                <li>Revisa la columna "Resultado" para ver la distribución detallada de cada sorteo.</li>
+                <li>Usa la fecha y hora para identificar sorteos específicos.</li>
+                <li>Haz clic en el botón PDF para descargar una versión en PDF del sorteo seleccionado.</li>
+            </ol>
+        </div>
+    </div>
+</body>
+</html>

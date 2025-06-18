@@ -6,6 +6,54 @@
     <title layout:title-pattern="$CONTENT | APSO">Sorteo de Grupos</title>
 </head>
 <body>
+
+<!-- Fragmentos de ayuda -->
+<th:block layout:fragment="help-title">Ayuda - Sorteo de Grupos</th:block>
+
+<th:block layout:fragment="help-content">
+    <h5><i class="bi bi-info-circle me-2"></i>Antes de Comenzar</h5>
+    <ul>
+        <li>Asegúrate de haber cargado la lista de estudiantes previamente.</li>
+        <li>El sistema no permitirá realizar sorteos si no hay estudiantes registrados.</li>
+        <li>Todos los estudiantes cargados participarán en el sorteo.</li>
+    </ul>
+
+    <h5><i class="bi bi-shuffle me-2"></i>Realizar el Sorteo</h5>
+    <ul>
+        <li>Ingresa el número de grupos que deseas formar.</li>
+        <li>El sistema verificará que el número sea válido:
+            <ul>
+                <li>Mínimo: 1 grupo</li>
+                <li>Máximo: La mitad del total de estudiantes</li>
+            </ul>
+        </li>
+        <li>Haz clic en "Ejecutar sorteo" para generar los grupos.</li>
+    </ul>
+
+    <h5><i class="bi bi-people me-2"></i>Distribución de Grupos</h5>
+    <ul>
+        <li>Los estudiantes se distribuyen aleatoriamente entre los grupos.</li>
+        <li>Si el número total de estudiantes no es divisible entre la cantidad de grupos:
+            <ul>
+                <li>Algunos grupos pueden tener un estudiante más que otros.</li>
+                <li>La diferencia máxima será de 1 estudiante entre grupos.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h5><i class="bi bi-eye me-2"></i>Visualización de Resultados</h5>
+    <ul>
+        <li>Los grupos se mostrarán en tarjetas separadas.</li>
+        <li>Cada tarjeta mostrará:
+            <ul>
+                <li>Número de grupo</li>
+                <li>Lista de integrantes con nombres y correos</li>
+            </ul>
+        </li>
+        <li>Puedes realizar un nuevo sorteo en cualquier momento.</li>
+    </ul>
+</th:block>
+
 <main layout:fragment="content">
 
     <h1 class="section-title">Sorteo de Grupos</h1>

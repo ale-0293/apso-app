@@ -28,27 +28,37 @@ public class CargaCSVService {
     public void cargarEstudiantesDesdeCSV(MultipartFile archivoCSV) throws Exception {
         List<Estudiante> estudiantes = new ArrayList<>();
 
-        Usuario usuarioActual = usuarioService.obtenerUsuarioDesdeRequest(request);
-
-        try (
-            BufferedReader reader = new BufferedReader(new InputStreamReader(archivoCSV.getInputStream(), StandardCharsets.UTF_8));
-            CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim())
-        ) {
-            for (CSVRecord record : csvParser) {
-                Estudiante estudiante = new Estudiante();
-                estudiante.setNombre(record.get("nombre"));
-                estudiante.setEmail(record.get("email"));
-                estudiante.setGrupoTeorico(record.get("grupo_teorico"));
-                estudiante.setAsignatura(record.get("asignatura"));
-                //estudiante.setCargaId(record.get("carga_id"));    // PR ML
-                //estudiante.setCargaId(Integer.parseInt(record.get("carga_id")));    // PR ML
-                estudiante.setCargaId(Long.parseLong(record.get("carga_id")));
-                estudiante.setUsuario(usuarioActual); // vínculo directo al usuario
-
-                estudiantes.add(estudiante);
+        try {
+            Usuario usuarioActual = usuarioService.obtenerUsuarioDesdeRequest(request);
+            if (usuarioActual == null) {
+                throw new RuntimeException("No se pudo obtener el usuario actual");
             }
 
-            estudianteRepository.saveAll(estudiantes);
+            try (BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(archivoCSV.getInputStream(), StandardCharsets.UTF_8));
+                    CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT
+                            .withFirstRecordAsHeader()
+                            .withIgnoreHeaderCase()
+                            .withTrim())) {
+                for (CSVRecord record : csvParser) {
+                    Estudiante estudiante = new Estudiante();
+                    estudiante.setNombre(record.get("nombre"));
+                    estudiante.setEmail(record.get("email"));
+                    estudiante.setGrupoTeorico(record.get("grupo_teorico"));
+                    estudiante.setAsignatura(record.get("asignatura"));
+                    estudiante.setCargaId(Long.parseLong(record.get("carga_id")));
+                    estudiante.setUsuario(usuarioActual);
+
+                    estudiantes.add(estudiante);
+                }
+
+                estudianteRepository.saveAll(estudiantes);
+            }
+        } catch (NumberFormatException e) {
+            throw new Exception(
+                    "Error al procesar el archivo: El formato del ID de carga no es válido. Debe ser un número.");
+        } catch (Exception e) {
+            throw new Exception("Error al procesar el archivo: " + e.getMessage());
         }
     }
 }

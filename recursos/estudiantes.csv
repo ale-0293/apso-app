@@ -1,0 +1,81 @@
+nombre,email,grupo_teorico,asignatura,carga_id
+Jorge Romero,jorge.romero@ues.edu.sv,GT04,Quimica Organica,202501
+Elena Ruiz,elena.ruiz@ues.edu.sv,GT02,Ecuaciones Diferenciales,202502
+Mario Sanchez,mario.sanchez@ues.edu.sv,GT05,Quimica Organica,202503
+Gabriela Vargas,gabriela.vargas@ues.edu.sv,GT01,Estadistica y Probabilidad,202504
+Carlos Cruz,carlos.cruz@ues.edu.sv,GT02,Ecuaciones Diferenciales,202505
+Claudia Chavez,claudia.chavez@ues.edu.sv,GT02,Calculo Integral,202506
+Victor Martinez,victor.martinez@ues.edu.sv,GT01,Algebra Lineal,202507
+Elena Ortiz,elena.ortiz@ues.edu.sv,GT01,Calculo Integral,202508
+Paola Ortiz,paola.ortiz@ues.edu.sv,GT02,Calculo Integral,202509
+Daniela Acosta,daniela.acosta@ues.edu.sv,GT01,Estadistica y Probabilidad,202510
+Claudia Garcia,claudia.garcia@ues.edu.sv,GT04,Sistemas Operativos,202511
+Raul Sanchez,raul.sanchez@ues.edu.sv,GT04,Algebra Lineal,202512
+Luis Molina,luis.molina@ues.edu.sv,GT04,Ecuaciones Diferenciales,202513
+Victor Flores,victor.flores@ues.edu.sv,GT04,Quimica Organica,202514
+Luis Sanchez,luis.sanchez@ues.edu.sv,GT05,Fisica General,202515
+Mario Cruz,mario.cruz@ues.edu.sv,GT03,Calculo Integral,202516
+David Ortiz,david.ortiz@ues.edu.sv,GT02,Programacion I,202517
+Mario Ruiz,mario.ruiz@ues.edu.sv,GT01,Algebra Lineal,202518
+Claudia Vargas,claudia.vargas@ues.edu.sv,GT02,Algebra Lineal,202519
+Isabel Martinez,isabel.martinez@ues.edu.sv,GT03,Estadistica y Probabilidad,202520
+Isabel Molina,isabel.molina@ues.edu.sv,GT01,Fisica General,202521
+Victor Acosta,victor.acosta@ues.edu.sv,GT05,Estadistica y Probabilidad,202522
+Isabel Herrera,isabel.herrera@ues.edu.sv,GT05,Ecuaciones Diferenciales,202523
+Mario Castro,mario.castro@ues.edu.sv,GT03,Algebra Lineal,202524
+Laura Herrera,laura.herrera@ues.edu.sv,GT03,Programacion I,202525
+Laura Castro,laura.castro@ues.edu.sv,GT03,Sistemas Operativos,202526
+Luis Flores,luis.flores@ues.edu.sv,GT04,Fisica General,202527
+Daniela Rojas,daniela.rojas@ues.edu.sv,GT02,Ecuaciones Diferenciales,202528
+Laura Herrera,laura.herrera@ues.edu.sv,GT01,Sistemas Operativos,202529
+Elena Flores,elena.flores@ues.edu.sv,GT03,Ecuaciones Diferenciales,202530
+Carlos Herrera,carlos.herrera@ues.edu.sv,GT03,Sistemas Operativos,202531
+Isabel Molina,isabel.molina@ues.edu.sv,GT05,Ecuaciones Diferenciales,202532
+Daniela Ramos,daniela.ramos@ues.edu.sv,GT05,Programacion I,202533
+Gabriela Vargas,gabriela.vargas@ues.edu.sv,GT01,Algebra Lineal,202534
+Mario Ramos,mario.ramos@ues.edu.sv,GT01,Quimica Organica,202535
+Sandra Chavez,sandra.chavez@ues.edu.sv,GT02,Calculo Integral,202536
+Elena Romero,elena.romero@ues.edu.sv,GT02,Fisica General,202537
+Jose Chavez,jose.chavez@ues.edu.sv,GT04,Ecuaciones Diferenciales,202538
+Jose Garcia,jose.garcia@ues.edu.sv,GT04,Sistemas Operativos,202539
+Francisco Flores,francisco.flores@ues.edu.sv,GT04,Fisica General,202540
+Ana Acosta,ana.acosta@ues.edu.sv,GT05,Ecuaciones Diferenciales,202541
+Raul Vargas,raul.vargas@ues.edu.sv,GT05,Estadistica y Probabilidad,202542
+Gabriela Rojas,gabriela.rojas@ues.edu.sv,GT03,Calculo Integral,202543
+Roberto Garcia,roberto.garcia@ues.edu.sv,GT01,Calculo Integral,202544
+David Ruiz,david.ruiz@ues.edu.sv,GT05,Sistemas Operativos,202545
+Raul Chavez,raul.chavez@ues.edu.sv,GT03,Programacion I,202546
+David Medina,david.medina@ues.edu.sv,GT03,Calculo Integral,202547
+Carlos Sanchez,carlos.sanchez@ues.edu.sv,GT01,Estadistica y Probabilidad,202548
+Laura Cruz,laura.cruz@ues.edu.sv,GT03,Quimica Organica,202549
+Carlos Romero,carlos.romero@ues.edu.sv,GT04,Fisica General,202550
+Daniela Herrera,daniela.herrera@ues.edu.sv,GT03,Sistemas Operativos,202551
+Sandra Acosta,sandra.acosta@ues.edu.sv,GT05,Algebra Lineal,202552
+Jorge Ortiz,jorge.ortiz@ues.edu.sv,GT05,Calculo Integral,202553
+Jorge Torres,jorge.torres@ues.edu.sv,GT04,Quimica Organica,202554
+Carlos Ramos,carlos.ramos@ues.edu.sv,GT05,Programacion I,202555
+Elena Ramos,elena.ramos@ues.edu.sv,GT03,Fisica General,202556
+Luis Ruiz,luis.ruiz@ues.edu.sv,GT01,Algebra Lineal,202557
+Jorge Vargas,jorge.vargas@ues.edu.sv,GT03,Fisica General,202558
+Luis Perez,luis.perez@ues.edu.sv,GT02,Estadistica y Probabilidad,202559
+Laura Ruiz,laura.ruiz@ues.edu.sv,GT03,Programacion I,202560
+Ana Molina,ana.molina@ues.edu.sv,GT03,Algebra Lineal,202561
+Elena Torres,elena.torres@ues.edu.sv,GT05,Algebra Lineal,202562
+Antonio Ortiz,antonio.ortiz@ues.edu.sv,GT02,Calculo Integral,202563
+Antonio Martinez,antonio.martinez@ues.edu.sv,GT01,Programacion I,202564
+David Perez,david.perez@ues.edu.sv,GT02,Quimica Organica,202565
+Claudia Vargas,claudia.vargas@ues.edu.sv,GT03,Programacion I,202566
+Elena Vargas,elena.vargas@ues.edu.sv,GT02,Fisica General,202567
+Sandra Medina,sandra.medina@ues.edu.sv,GT05,Ecuaciones Diferenciales,202568
+Claudia Lopez,claudia.lopez@ues.edu.sv,GT03,Ecuaciones Diferenciales,202569
+Raul Flores,raul.flores@ues.edu.sv,GT04,Fisica General,202570
+Antonio Flores,antonio.flores@ues.edu.sv,GT02,Ecuaciones Diferenciales,202571
+Gabriela Vargas,gabriela.vargas@ues.edu.sv,GT02,Calculo Integral,202572
+Gabriela Romero,gabriela.romero@ues.edu.sv,GT01,Sistemas Operativos,202573
+Luis Ortiz,luis.ortiz@ues.edu.sv,GT03,Programacion I,202574
+Elena Ramos,elena.ramos@ues.edu.sv,GT02,Ecuaciones Diferenciales,202575
+Mario Perez,mario.perez@ues.edu.sv,GT01,Calculo Integral,202576
+Laura Ruiz,laura.ruiz@ues.edu.sv,GT05,Sistemas Operativos,202577
+Antonio Herrera,antonio.herrera@ues.edu.sv,GT03,Fisica General,202578
+Luis Chavez,luis.chavez@ues.edu.sv,GT04,Programacion I,202579
+Victor Ruiz,victor.ruiz@ues.edu.sv,GT02,Programacion I,202580

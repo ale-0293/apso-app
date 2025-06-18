@@ -28,6 +28,6 @@ public class SorteoGrupalService {
     }
 
     public List<SorteoGrupal> obtenerSorteosPorUsuario(Usuario usuario) {
-        return sorteoGrupalRepository.findByUsuario(usuario);
+        return sorteoGrupalRepository.findByUsuarioOrderByFechaHoraDesc(usuario);
     }
 }

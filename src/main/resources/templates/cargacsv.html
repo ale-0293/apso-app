@@ -6,8 +6,50 @@
     <title layout:title-pattern="$CONTENT | APSO">Cargar Estudiantes</title>
 </head>
 <body>
-<main layout:fragment="content">
 
+<!-- Fragmentos de ayuda -->
+<th:block layout:fragment="help-title">Ayuda - Carga de Estudiantes</th:block>
+
+<th:block layout:fragment="help-content">
+    <h5><i class="bi bi-file-earmark-text me-2"></i>Formato del Archivo CSV</h5>
+    <ul>
+        <li>El archivo debe estar en formato CSV (valores separados por comas).</li>
+        <li>Debe contener las siguientes columnas en orden:
+            <ul>
+                <li><strong>nombre:</strong> Nombre completo del estudiante</li>
+                <li><strong>email:</strong> Correo electrónico</li>
+                <li><strong>grupoTeorico:</strong> Número o identificador del grupo teórico</li>
+                <li><strong>asignatura:</strong> Nombre o código de la asignatura</li>
+            </ul>
+        </li>
+        <li>La primera fila debe contener los nombres de las columnas.</li>
+    </ul>
+
+    <h5><i class="bi bi-upload me-2"></i>Cómo Cargar el Archivo</h5>
+    <ul>
+        <li>Haz clic en "Seleccionar archivo" para buscar tu archivo CSV.</li>
+        <li>Una vez seleccionado, haz clic en "Cargar CSV" para procesar el archivo.</li>
+        <li>Espera a que se complete la carga - verás un mensaje de confirmación.</li>
+    </ul>
+
+    <h5><i class="bi bi-table me-2"></i>Visualización de Estudiantes</h5>
+    <ul>
+        <li>Después de la carga, los estudiantes aparecerán en la tabla inferior.</li>
+        <li>Puedes verificar que todos los datos se hayan cargado correctamente.</li>
+        <li>Si hay algún error, puedes usar el botón "Eliminar todos los estudiantes" y volver a cargar.</li>
+    </ul>
+
+    <h5><i class="bi bi-exclamation-triangle me-2"></i>Consideraciones Importantes</h5>
+    <ul>
+        <li>Asegúrate de que tu archivo CSV esté codificado en UTF-8.</li>
+        <li>No debe haber filas vacías en el archivo.</li>
+        <li>Los correos electrónicos deben ser únicos para cada estudiante.</li>
+        <li>La opción de eliminar estudiantes borrará TODOS los registros - úsala con precaución.</li>
+    </ul>
+</th:block>
+
+<!-- Contenido principal de la página -->
+<main layout:fragment="content">
     <h1 class="section-title">Carga de Estudiantes desde CSV</h1>
 
     <div th:if="${mensaje}" class="alert alert-success" role="alert">
@@ -17,7 +59,6 @@
 
     <div class="card mb-4">
         <div class="card-body">
-
             <form method="post" enctype="multipart/form-data" th:action="@{/cargacsv}">
                 <div class="mb-3">
                     <label class="form-label">Selecciona archivo CSV:</label>
@@ -74,5 +115,6 @@
     </form>
 -->
 </main>
+
 </body>
 </html>

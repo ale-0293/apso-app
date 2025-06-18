@@ -1,4 +1,3 @@
-
 body { background-color: #f9f9f9; color: #212121; }
 .hero-section { padding: 60px 0; background-color: #7A0E17; color: white; text-align: center; }
 .btn-primary { background-color: #7A0E17; border-color: #7A0E17; }
@@ -13,3 +12,55 @@ body { background-color: #f9f9f9; color: #212121; }
 .group-list-item { display: flex; align-items: center; gap: 8px; }
 .group-list-item i { color: #7A0E17; }
 footer { margin-top: 60px; padding: 20px 0; background-color: #1C1C1C; color: white; text-align: center; }
+
+/* Estilos para el botón de ayuda flotante */
+.help-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #7A0E17;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.help-button:hover {
+    background-color: #A91B20;
+    transform: scale(1.1);
+}
+
+/* Estilos para el modal de ayuda */
+.help-modal .modal-header {
+    background-color: #7A0E17;
+    color: white;
+}
+
+.help-modal .modal-title {
+    font-weight: bold;
+}
+
+.help-content {
+    padding: 20px;
+}
+
+.help-content h5 {
+    color: #7A0E17;
+    margin-top: 15px;
+}
+
+.help-content ul {
+    padding-left: 20px;
+    margin-top: 10px;
+}
+
+.help-content li {
+    margin-bottom: 8px;
+}
