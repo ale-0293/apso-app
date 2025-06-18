@@ -2,31 +2,135 @@
 <html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
 <head>
     <title>Detalle del Sorteo - APSO</title>
+    <style>
+        .detalle-card {
+            max-width: 600px;
+            margin: 40px auto;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            border-radius: 12px;
+            background: #fff;
+        }
+        .detalle-header {
+            background: linear-gradient(90deg, #fce4e4 60%, #fff 100%);
+            border-radius: 14px 14px 0 0;
+            padding: 28px 36px 18px 36px;
+            box-shadow: 0 2px 8px rgba(220,53,69,0.04);
+        }
+        .detalle-header h1 {
+            margin: 0;
+            font-size: 2.3rem;
+            font-weight: 800;
+            color: #b71c1c;
+            margin-bottom: 18px;
+            letter-spacing: -1px;
+        }
+        .detalle-header i {
+            margin-right: 10px;
+            color: #b71c1c;
+        }
+        .detalle-body {
+            padding: 24px 32px;
+        }
+        .detalle-label {
+            color: #888;
+            font-size: 1rem;
+            margin-bottom: 2px;
+        }
+        .detalle-valor {
+            font-size: 1.15rem;
+            margin-bottom: 16px;
+            font-weight: 500;
+        }
+        .detalle-resultado {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 16px;
+            font-size: 1rem;
+            white-space: pre-wrap;
+            margin-bottom: 24px;
+        }
+        .btn-volver {
+            margin-right: 10px;
+        }
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .info-item i {
+            color: #b71c1c;
+            font-size: 1.3em;
+        }
+        .info-item div {
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
 </head>
 <body>
 <div layout:fragment="content">
-    <div class="container mt-4">
-        <div class="card">
-            <div class="card-header bg-white">
-                <h3 class="mb-0">Detalle del Sorteo</h3>
-            </div>
-            <div class="card-body">
-                <div th:if="${sorteo != null}">
-                    <div><strong>Título:</strong> <span th:text="${sorteo.titulo}"></span></div>
-                    <div><strong>Fecha y Hora:</strong> <span th:text="${#temporals.format(sorteo.fechaHora, 'dd/MM/yyyy HH:mm')}"></span></div>
-                    <div><strong>Cantidad de Grupos:</strong> <span th:text="${sorteo.cantidadGrupos}"></span></div>
-                    <div><strong>Resultado del Sorteo:</strong></div>
-                    <pre class="resultado p-2 bg-light rounded mt-2" style="white-space: pre-wrap;">[[${sorteo.resultado}]]</pre>
-                    <a th:href="@{'/grupos/exportar-pdf/' + ${sorteo.id}}" class="btn btn-danger mt-3">
-                        <i class="far fa-file-pdf"></i> Descargar PDF
-                    </a>
+    <div class="detalle-card">
+        <div class="detalle-header">
+            <h1>
+                <i class="fas fa-random"></i>
+                <span th:text="${sorteo.titulo}">Título del Sorteo</span>
+            </h1>
+            <div style="display:flex; gap:40px; flex-wrap:wrap; align-items:center;">
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <i class="far fa-calendar-alt" style="color:#b71c1c; font-size:1.3em;"></i>
+                    <div>
+                        <div style="color:#888; font-size:1rem; font-weight:700;">Fecha y Hora</div>
+                        <div style="font-size:1.15rem; font-weight:600; color:#222; line-height:1;" th:text="${#temporals.format(sorteo.fechaHora, 'dd/MM/yyyy HH:mm')}">01/01/2025 12:00</div>
+                    </div>
                 </div>
-                <div th:if="${sorteo == null}" class="alert alert-danger mt-3">
-                    Sorteo no encontrado.
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <i class="fas fa-users" style="color:#b71c1c; font-size:1.3em;"></i>
+                    <div>
+                        <div style="color:#888; font-size:1rem; font-weight:700;">Cantidad de Grupos</div>
+                        <div style="font-size:1.15rem; font-weight:600; color:#222; line-height:1;" th:text="${sorteo.cantidadGrupos}">4</div>
+                    </div>
                 </div>
-                <a th:href="@{'/historialsorteos'}" class="btn btn-secondary mt-3">Volver al historial</a>
             </div>
         </div>
+        <div class="detalle-body">
+            <div class="detalle-label" style="margin:32px 0 24px 0; font-size:1.1rem; color:#b71c1c; font-weight:600;">Resultado del Sorteo</div>
+            <div th:if="${gruposDetalle != null}">
+                <div th:each="grupo : ${gruposDetalle}" class="mb-4">
+                    <h4 style="background:#f8d7da; padding:8px 16px; border-radius:6px 6px 0 0; margin-bottom:0; font-size:1.1rem; font-weight:600; letter-spacing:0.5px;"> <span th:text="${grupo.nombre}"></span> </h4>
+                    <table class="table table-bordered table-sm" style="background:#fff;">
+                        <thead style="background:#dc3545; color:white;">
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Grupo Teórico</th>
+                            <th>Asignatura</th>
+                            <th>Carga ID</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="est : ${grupo.estudiantes}">
+                            <td th:text="${est.id}"></td>
+                            <td th:text="${est.nombre}"></td>
+                            <td th:text="${est.email}"></td>
+                            <td th:text="${est.grupoTeorico}"></td>
+                            <td th:text="${est.asignatura}"></td>
+                            <td th:text="${est.cargaId}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <a th:href="@{'/grupos/exportar-pdf/' + ${sorteo.id}}" class="btn btn-danger">
+                <i class="far fa-file-pdf"></i> Descargar PDF
+            </a>
+            <a th:href="@{'/historialsorteos'}" class="btn btn-secondary btn-volver">Volver al historial</a>
+        </div>
+    </div>
+    <div th:if="${sorteo == null}" class="alert alert-danger mt-3 text-center">
+        Sorteo no encontrado.
     </div>
 </div>
 </body>
