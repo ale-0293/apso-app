@@ -93,25 +93,19 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="sorteo : ${sorteos}">
-                                    <td th:text="${sorteo.titulo}"></td>
-                                    <td th:text="${#temporals.format(sorteo.fechaHora, 'dd/MM/yyyy HH:mm')}"></td>
-                                    <td th:text="${sorteo.cantidadGrupos}"></td>                                    <td class="text-center">
-                                        <button type="button" class="btn-ver me-2" 
-                                            data-bs-toggle="modal" 
-                                            data-bs-target="#sorteoModal"
-                                            th:data-sorteo-id="${sorteo.id}"
-                                            th:data-sorteo-titulo="${sorteo.titulo}"
-                                            th:data-sorteo-fecha="${#temporals.format(sorteo.fechaHora, 'dd/MM/yyyy HH:mm')}"
-                                            th:data-sorteo-grupos="${sorteo.cantidadGrupos}"
-                                            th:data-sorteo-resultado="${sorteo.resultado}">
-                                            <i class="far fa-eye"></i> Ver sorteo
-                                        </button>
-                                        <a th:href="@{'/grupos/exportar-pdf/' + ${sorteo.id}}" class="btn-pdf">
-                                            <i class="far fa-file-pdf"></i> PDF
-                                        </a>
-                                    </td>
-                                </tr>
+<tr th:each="sorteo, iterStat : ${sorteos}">
+    <td th:text="${sorteo.titulo}"></td>
+    <td th:text="${#temporals.format(sorteo.fechaHora, 'dd/MM/yyyy HH:mm')}"></td>
+    <td th:text="${sorteo.cantidadGrupos}"></td>
+    <td class="text-center">
+        <a th:href="@{'/sorteo/' + ${sorteo.id}}" class="btn-ver me-2">
+            <i class="far fa-eye"></i> Ver sorteo
+        </a>
+        <a th:href="@{'/grupos/exportar-pdf/' + ${sorteo.id}}" class="btn-pdf">
+            <i class="far fa-file-pdf"></i> PDF
+        </a>
+    </td>
+</tr>
                             </tbody>
                         </table>
                     </div>
@@ -123,36 +117,46 @@
                 </div>
             </div>
         </div>        <!-- Modal para ver detalles del sorteo -->
-        <div class="modal fade" id="sorteoModal" tabindex="-1" aria-labelledby="sorteoModalLabel" aria-hidden="true">
+        <div class="modal" id="sorteoModal" tabindex="-1">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="sorteoModalLabel">Detalles del Sorteo</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="mb-4">
-                            <div class="mb-3 row">
-                                <label class="col-sm-3 fw-bold">Título:</label>
-                                <div class="col-sm-9" id="modalTitulo"></div>
+                        <div class="container-fluid p-0">
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <strong>Título:</strong>
+                                    <p id="modalTitulo" class="mb-0 ps-2"></p>
+                                </div>
                             </div>
-                            <div class="mb-3 row">
-                                <label class="col-sm-3 fw-bold">Fecha y Hora:</label>
-                                <div class="col-sm-9" id="modalFecha"></div>
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <strong>Fecha y Hora:</strong>
+                                    <p id="modalFecha" class="mb-0 ps-2"></p>
+                                </div>
                             </div>
-                            <div class="mb-3 row">
-                                <label class="col-sm-3 fw-bold">Cantidad de Grupos:</label>
-                                <div class="col-sm-9" id="modalGrupos"></div>
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <strong>Cantidad de Grupos:</strong>
+                                    <p id="modalGrupos" class="mb-0 ps-2"></p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="resultado-container">
-                            <label class="fw-bold mb-2">Resultado del Sorteo:</label>
-                            <pre class="resultado p-3 bg-light rounded" id="modalResultado" style="white-space: pre-wrap; max-height: 400px; overflow-y: auto;"></pre>
+                            <div class="row">
+                                <div class="col-12">
+                                    <strong>Resultado del Sorteo:</strong>
+                                    <pre id="modalResultado" class="resultado p-3 bg-light rounded mt-2" 
+                                         style="white-space: pre-wrap; max-height: 400px; overflow-y: auto; 
+                                                font-size: 0.9em; border: 1px solid #dee2e6;"></pre>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <a id="modalPdfLink" class="btn-pdf">
+                        <a id="modalPdfLink" class="btn-pdf" href="#">
                             <i class="far fa-file-pdf"></i> PDF
                         </a>
                     </div>
@@ -205,28 +209,37 @@
     <!-- Scripts específicos para esta página -->    <th:block layout:fragment="scripts">
         <script th:inline="javascript">
             document.addEventListener('DOMContentLoaded', function() {
-                // Escuchar el evento show.bs.modal
-                const sorteoModal = document.getElementById('sorteoModal')
-                sorteoModal.addEventListener('show.bs.modal', function (event) {
-                    // Botón que activó el modal
-                    const button = event.relatedTarget
-                    
-                    // Extraer información de los atributos data-*
-                    const id = button.getAttribute('data-sorteo-id')
-                    const titulo = button.getAttribute('data-sorteo-titulo')
-                    const fecha = button.getAttribute('data-sorteo-fecha')
-                    const grupos = button.getAttribute('data-sorteo-grupos')
-                    const resultado = button.getAttribute('data-sorteo-resultado')
-
-                    // Actualizar el contenido del modal
-                    sorteoModal.querySelector('#modalTitulo').textContent = titulo
-                    sorteoModal.querySelector('#modalFecha').textContent = fecha
-                    sorteoModal.querySelector('#modalGrupos').textContent = grupos + ' grupos'
-                    sorteoModal.querySelector('#modalResultado').textContent = resultado
-                    sorteoModal.querySelector('#modalPdfLink').href = `/grupos/exportar-pdf/${id}`
-                })
-            })
+                document.getElementById('sorteoModal').addEventListener('show.bs.modal', function(event) {
+                    const button = event.relatedTarget;
+                    if (!button) return;
+                    let sorteo = button.getAttribute('data-sorteo');
+                    try {
+                        sorteo = JSON.parse(sorteo.replace(/&quot;/g, '"'));
+                    } catch (e) {
+                        console.error('No se pudo parsear el sorteo:', sorteo, e);
+                        return;
+                    }
+                    document.getElementById('modalTitulo').textContent = sorteo.titulo || '';
+                    document.getElementById('modalFecha').textContent = sorteo.fechaHora ? sorteo.fechaHora : '';
+                    document.getElementById('modalGrupos').textContent = sorteo.cantidadGrupos ? sorteo.cantidadGrupos + ' grupos' : '';
+                    document.getElementById('modalResultado').textContent = sorteo.resultado || '';
+                    if (sorteo.id) {
+                        document.getElementById('modalPdfLink').href = `/grupos/exportar-pdf/${sorteo.id}`;
+                    }
+                });
+            });
         </script>
     </th:block>
+
+<script>
+function toggleDetalle(id) {
+    var fila = document.getElementById(id);
+    if (fila.style.display === 'none' || fila.style.display === '') {
+        fila.style.display = 'table-row';
+    } else {
+        fila.style.display = 'none';
+    }
+}
+</script>
 </body>
 </html>

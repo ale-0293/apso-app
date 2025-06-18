@@ -312,6 +312,22 @@ public class GrupoController {
         }
     }
 
+    @GetMapping("/sorteo/{id}")
+    public String verDetalleSorteo(@PathVariable Long id, @AuthenticationPrincipal OidcUser oidcUser, Model model) {
+        if (oidcUser == null) {
+            model.addAttribute("error", "Debes iniciar sesión para ver el detalle del sorteo.");
+            return "detalle-sorteo";
+        }
+        Optional<SorteoGrupal> sorteoOpt = sorteoGrupalRepository.findById(id);
+        if (sorteoOpt.isPresent()) {
+            model.addAttribute("sorteo", sorteoOpt.get());
+        } else {
+            model.addAttribute("sorteo", null);
+        }
+        agregarDatosUsuario(model, oidcUser);
+        return "detalle-sorteo";
+    }
+
     private void agregarDatosUsuario(Model model, OidcUser oidcUser) {
         if (oidcUser != null) {
             model.addAttribute("userName", oidcUser.getFullName());

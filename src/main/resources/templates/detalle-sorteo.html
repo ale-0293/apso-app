@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+<head>
+    <title>Detalle del Sorteo - APSO</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-header bg-white">
+                <h3 class="mb-0">Detalle del Sorteo</h3>
+            </div>
+            <div class="card-body">
+                <div th:if="${sorteo != null}">
+                    <div><strong>Título:</strong> <span th:text="${sorteo.titulo}"></span></div>
+                    <div><strong>Fecha y Hora:</strong> <span th:text="${#temporals.format(sorteo.fechaHora, 'dd/MM/yyyy HH:mm')}"></span></div>
+                    <div><strong>Cantidad de Grupos:</strong> <span th:text="${sorteo.cantidadGrupos}"></span></div>
+                    <div><strong>Resultado del Sorteo:</strong></div>
+                    <pre class="resultado p-2 bg-light rounded mt-2" style="white-space: pre-wrap;">[[${sorteo.resultado}]]</pre>
+                    <a th:href="@{'/grupos/exportar-pdf/' + ${sorteo.id}}" class="btn btn-danger mt-3">
+                        <i class="far fa-file-pdf"></i> Descargar PDF
+                    </a>
+                </div>
+                <div th:if="${sorteo == null}" class="alert alert-danger mt-3">
+                    Sorteo no encontrado.
+                </div>
+                <a th:href="@{'/historialsorteos'}" class="btn btn-secondary mt-3">Volver al historial</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
