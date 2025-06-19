@@ -277,7 +277,9 @@ public class GrupoController {
         return ResponseEntity.ok()
                 .headers(headers)
                 .body(pdf);
-    }    @GetMapping("/grupos/exportar-pdf/{id}")
+    }
+
+    @GetMapping("/grupos/exportar-pdf/{id}")
     public ResponseEntity<byte[]> exportarPDF(@PathVariable Long id) {
         try {
             // Obtener el sorteo de la base de datos

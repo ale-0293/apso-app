@@ -13,9 +13,44 @@
 </head>
 
 <body th:fragment="footer">
-    <footer>
-        <div>Universidad de El Salvador &middot; App de Sorteos - APSO</div>
+    <footer class="text-center py-4" style="background:#222; color:#fff;">
+        <div>
+            <span id="footer-credits" tabindex="0" style="cursor:pointer; text-decoration:none;" data-bs-toggle="popover" data-bs-trigger="focus" title="Ingenieria en Desarrollo de Software" data-bs-html="true" data-bs-content="Desarrollo de Aplicaciones Web<br>Ciclo I - 2025<br>RG20063 - MA20093 - MM22090 - AC12066">
+                Universidad de El Salvador &middot; App de Sorteos - APSO
+            </span>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var popoverTrigger = document.getElementById('footer-credits');
+                    if (popoverTrigger) {
+                        new bootstrap.Popover(popoverTrigger, {
+                            html: true
+                        });
+                    }
+                });
+            </script>
+            <style>
+                .popover {
+                    min-width: 250px !important;
+                    max-width: 450px !important;
+                }
+                .popover-header {
+                    white-space: nowrap;
+                    font-weight: bold;
+                    font-size: 1rem;
+                    padding-left: 10px;
+                    padding-right: 10px;
+                }
+            </style>
+        </div>
         <div style="font-size: 0.9rem;">&copy; 2025 - Todos los derechos reservados</div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var popoverTrigger = document.getElementById('footer-credits');
+                if (popoverTrigger) {
+                    new bootstrap.Popover(popoverTrigger);
+                }
+            });
+        </script>
     </footer>
 </body>
 </html>
