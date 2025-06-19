@@ -2,11 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<head th:replace="fragments :: head(${pageTitle})"></head>
+<head th:replace="~{fragments :: head(${pageTitle})}"></head>
 
 <body>
 
-<div th:replace="navbar :: navbar"></div>
+<div th:replace="~{navbar :: navbar}"></div>
 
 <main class="container py-4" layout:fragment="content">
     <!-- Contenido específico de cada página irá aquí -->
@@ -40,7 +40,7 @@
     </div>
 </div>
 
-<div th:replace="fragments :: footer"></div>
+<div th:replace="~{fragments :: footer}"></div>
 
 </body>
 </html>

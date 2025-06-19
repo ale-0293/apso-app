@@ -56,7 +56,14 @@
 
 <main layout:fragment="content">
 
-    <h1 class="section-title">Sorteo de Grupos</h1>
+    <div class="card-header bg-white"
+         style="background: linear-gradient(90deg, #fce4e4 60%, #fff 100%); border-radius: 14px 14px 0 0; padding: 28px 36px 18px 36px; box-shadow: 0 2px 8px rgba(220,53,69,0.04); border-bottom: 2px solid #dc3545;">
+        <h2 class="mb-0"
+            style="font-size:2rem; font-weight:800; color:#b71c1c; letter-spacing:-1px; display:flex; align-items:center; gap:12px;">
+            <i class="fas fa-random" style="color:#b71c1c;"></i>
+            Sorteo de Grupos
+        </h2>
+    </div>
 
     <!-- Mensajes de éxito o error -->
     <div th:if="${mensaje}" class="alert alert-success" th:text="${mensaje}"></div>

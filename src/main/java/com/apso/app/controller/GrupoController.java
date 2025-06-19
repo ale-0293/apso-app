@@ -7,6 +7,9 @@ import com.apso.app.repository.EstudianteRepository;
 import com.apso.app.repository.SorteoGrupalRepository;
 import com.apso.app.repository.UsuarioRepository;
 import com.apso.app.service.PDFService;
+import com.apso.app.model.GrupoDetalle;
+import com.apso.app.model.EstudianteDetalle;
+import java.util.regex.*;
 
 import lombok.RequiredArgsConstructor;
 
@@ -274,6 +277,83 @@ public class GrupoController {
         return ResponseEntity.ok()
                 .headers(headers)
                 .body(pdf);
+    }
+
+    @GetMapping("/grupos/exportar-pdf/{id}")
+    public ResponseEntity<byte[]> exportarPDF(@PathVariable Long id) {
+        try {
+            // Obtener el sorteo de la base de datos
+            Optional<SorteoGrupal> sorteoOpt = sorteoGrupalRepository.findById(id);
+            if (!sorteoOpt.isPresent()) {
+                return ResponseEntity.notFound().build();
+            }
+            
+            SorteoGrupal sorteo = sorteoOpt.get();
+            
+            // Generar PDF
+            byte[] pdfContent = pdfService.generarPDFSorteo(sorteo);
+            
+            // Limpiar el título para usarlo como nombre de archivo
+            String nombreArchivo = sorteo.getTitulo()
+                .replaceAll("[^a-zA-Z0-9.-]", "_") // Reemplazar caracteres no permitidos con _
+                .replaceAll("_{2,}", "_") // Reemplazar múltiples _ consecutivos con uno solo
+                .toLowerCase() + ".pdf";
+            
+            // Configurar headers para la descarga
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            headers.setContentDisposition(
+                ContentDisposition.builder("attachment")
+                    .filename(nombreArchivo)
+                    .build());
+            
+            return ResponseEntity.ok()
+                .headers(headers)
+                .body(pdfContent);
+                
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @GetMapping("/sorteo/{id}")
+    public String verDetalleSorteo(@PathVariable Long id, @AuthenticationPrincipal OidcUser oidcUser, Model model) {
+        if (oidcUser == null) {
+            model.addAttribute("error", "Debes iniciar sesión para ver el detalle del sorteo.");
+            return "detalle-sorteo";
+        }
+        Optional<SorteoGrupal> sorteoOpt = sorteoGrupalRepository.findById(id);
+        if (sorteoOpt.isPresent()) {
+            SorteoGrupal sorteo = sorteoOpt.get();
+            model.addAttribute("sorteo", sorteo);
+            // Procesar resultado a estructura de grupos
+            List<GrupoDetalle> gruposDetalle = new ArrayList<>();
+            String[] grupos = sorteo.getResultado().split("Grupo \\d+:");
+            for (int i = 1; i < grupos.length; i++) {
+                String nombreGrupo = "Grupo " + i;
+                String estudiantesData = grupos[i];
+                List<EstudianteDetalle> estudiantes = new ArrayList<>();
+                Pattern pattern = Pattern.compile("- ID: (\\d+)\\s*\\n\\s*Nombre: ([^\\n]+)\\s*\\n\\s*Email: ([^\\n]+)\\s*\\n\\s*Grupo Teórico: ([^\\n]+)\\s*\\n\\s*Asignatura: ([^\\n]+)\\s*\\n\\s*Carga ID: (\\d+)");
+                Matcher matcher = pattern.matcher(estudiantesData);
+                while (matcher.find()) {
+                    estudiantes.add(new EstudianteDetalle(
+                        matcher.group(1),
+                        matcher.group(2),
+                        matcher.group(3),
+                        matcher.group(4),
+                        matcher.group(5),
+                        matcher.group(6)
+                    ));
+                }
+                gruposDetalle.add(new GrupoDetalle(nombreGrupo, estudiantes));
+            }
+            model.addAttribute("gruposDetalle", gruposDetalle);
+        } else {
+            model.addAttribute("sorteo", null);
+        }
+        agregarDatosUsuario(model, oidcUser);
+        return "detalle-sorteo";
     }
 
     private void agregarDatosUsuario(Model model, OidcUser oidcUser) {
